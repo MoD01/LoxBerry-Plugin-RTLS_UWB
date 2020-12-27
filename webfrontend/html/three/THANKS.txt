@@ -1,0 +1,2 @@
+Thanks @helpmeifyoucan (github repo: "helpmeifyoucan/habpanel_threejs"), who provided the initial example on how to combine threejs with openhub. From now on I try to change your example to a loxberry compatible version.
+
