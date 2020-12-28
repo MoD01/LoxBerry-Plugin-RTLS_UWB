@@ -3,16 +3,30 @@
   <title>PHP-Test</title>
  </head>
  <body>
- <?php echo '<p>Hallo Welt</p>'; ?>
+ <?php
 
- <link type="text/css" rel="stylesheet" href="three/main.css">
-<div oc-lazy-load="'three/T.directive.js'">
-	<three-js-3d
-      style="position: absolute; left: 0; right: 0; top: 0; bottom: 0"
-      lib-url="three">
-	</three-js-3d>
-</div>
+ require_once "loxberry_io.php";
+require_once "phpMQTT/phpMQTT.php";
+
+// Get the MQTT Gateway connection details from LoxBerry
+$creds = mqtt_connectiondetails();
+
+// MQTT requires a unique client id
+$client_id = uniqid(gethostname()."_client");
+
+// Value we'd like to publish
+$value = 12345;
+
+// Be careful about the required namespace on inctancing new objects:
+$mqtt = new Bluerhinos\phpMQTT($creds['brokerhost'],  $creds['brokerport'], $client_id);
+    if( $mqtt->connect(true, NULL, $creds['brokeruser'], $creds['brokerpass'] ) ) {
+        $mqtt->publish("this/is/my/topic", $value, 0, 1);
+        $mqtt->close();
+    } else {
+        echo "MQTT connection failed";
+    }
 
 
+ ?>
  </body>
 </html>
