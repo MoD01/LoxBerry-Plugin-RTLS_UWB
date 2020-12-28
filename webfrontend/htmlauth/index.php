@@ -22,6 +22,14 @@ $mqtt = new Bluerhinos\phpMQTT($creds['brokerhost'],  $creds['brokerport'], $cli
     if( $mqtt->connect(true, NULL, $creds['brokeruser'], $creds['brokerpass'] ) ) {
         $mqtt->publish("this/is/my/topic", $value, 0, 1);
         echo "this/is/my/topic";
+
+        $topics['rtls/position/'] = array('qos' => 0, 'function' => 'procMsg');
+        $mqtt->subscribe($topics, 0);
+
+        while($mqtt->proc()) {
+            echo $mqtt;
+        }
+
         echo $value;
         $mqtt->close();
     } else {
