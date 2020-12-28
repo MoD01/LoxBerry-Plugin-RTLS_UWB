@@ -30,7 +30,7 @@ $mqtt = new Bluerhinos\phpMQTT($creds['brokerhost'],  $creds['brokerport'], $cli
 
 $mqtt->debug = true;
 
-$topics['rtls/position/'] = array('qos' => 0, 'function' => 'procMsg');
+$topics['rtls/position/user1'] = array('qos' => 0, 'function' => 'procMsg');
 $mqtt->subscribe($topics, 0);
 
 while($mqtt->proc()) {
