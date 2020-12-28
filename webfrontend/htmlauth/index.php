@@ -21,6 +21,8 @@ $value = 12345;
 $mqtt = new Bluerhinos\phpMQTT($creds['brokerhost'],  $creds['brokerport'], $client_id);
     if( $mqtt->connect(true, NULL, $creds['brokeruser'], $creds['brokerpass'] ) ) {
         $mqtt->publish("this/is/my/topic", $value, 0, 1);
+        echo "this/is/my/topic";
+        echo $value;
         $mqtt->close();
     } else {
         echo "MQTT connection failed";
