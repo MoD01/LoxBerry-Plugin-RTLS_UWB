@@ -23,19 +23,27 @@ $mqtt = new Bluerhinos\phpMQTT($creds['brokerhost'],  $creds['brokerport'], $cli
         $mqtt->publish("this/is/my/topic", $value, 0, 1);
         echo "this/is/my/topic";
 
-        $topics['rtls/position/'] = array('qos' => 0, 'function' => 'procMsg');
-        $mqtt->subscribe($topics, 0);
-
-        while($mqtt->proc()) {
-            echo $mqtt;
-        }
-
-        echo $value;
         $mqtt->close();
     } else {
         echo "MQTT connection failed";
     }
 
+$mqtt->debug = true;
+
+$topics['rtls/position/'] = array('qos' => 0, 'function' => 'procMsg');
+$mqtt->subscribe($topics, 0);
+
+while($mqtt->proc()) {
+
+}
+
+$mqtt->close();
+
+function procMsg($topic, $msg){
+		echo 'Msg Recieved: ' . date('r') . "\n";
+		echo "Topic: {$topic}\n\n";
+		echo "\t$msg\n\n";
+}
 
  ?>
  </body>
